@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_containerengine_node_pools"
+page_title: "Oracle Cloud Infrastructure: oci_containerengine_node_pools"
 sidebar_current: "docs-oci-datasource-containerengine-node_pools"
 description: |-
-  Provides a list of NodePools
+  Provides the list of Node Pools in Oracle Cloud Infrastructure Container Engine service
 ---
 
 # Data Source: oci_containerengine_node_pools
-The `oci_containerengine_node_pools` data source allows access to the list of OCI node_pools
+This data source provides the list of Node Pools in Oracle Cloud Infrastructure Container Engine service.
 
 List all the node pools in a compartment, and optionally filter by cluster.
 
@@ -53,12 +53,13 @@ The following attributes are exported:
 * `name` - The name of the node pool.
 * `node_image_id` - The OCID of the image running on the nodes in the node pool.
 * `node_image_name` - The name of the image running on the nodes in the node pool.
+* `node_metadata` - A list of key/value pairs to add to each underlyingOracle Cloud Infrastructure instance in the node pool.
 * `node_shape` - The name of the node shape of the nodes in the node pool.
 * `nodes` - The nodes in the node pool.
 	* `availability_domain` - The name of the availability domain in which this node is placed.
 	* `error` - An error that may be associated with the node.
-		* `code` - A short error code that defines the error, meant for programmatic parsing. See [API Errors](https://docs.us-phoenix-1.oraclecloud.com/Content/API/References/apierrors.htm).
-		* `message` - A human-readable error string.
+		* `code` - A short error code that defines the upstream error, meant for programmatic parsing. See [API Errors](https://docs.cloud.oracle.com/iaas/Content/API/References/apierrors.htm).
+		* `message` - A human-readable error string of the upstream error.
 	* `id` - The OCID of the compute instance backing this node.
 	* `lifecycle_details` - Details about the state of the node.
 	* `name` - The name of the node.

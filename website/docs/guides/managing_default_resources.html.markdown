@@ -7,7 +7,7 @@ description: |-
 ---
 ## Managing Default Virtual Cloud Network Resources
 
-When you create an [oci_core_vcn](../r/core_vcn.html.markdown)
+When you create an [oci_core_vcn](../r/core_vcn.html)
 resource, it will also create the following associated resources by default.
 
 - [oci_core_security_list](../r/core_security_list.html)
@@ -70,6 +70,7 @@ a targeted removal of a default resource, the resource will be removed from the 
 still exist in OCI with empty settings.
  
 Examples of targeted removal include:
+
 - Removing a default resource from a Terraform configuration that was previously applied
 - Running a `terraform destroy -target=<default resource>` command
 - Changing the `manage_default_resource_id` for a default resource that was previously applied

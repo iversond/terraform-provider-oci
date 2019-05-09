@@ -1,15 +1,15 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_identity_swift_passwords"
+page_title: "Oracle Cloud Infrastructure: oci_identity_swift_passwords"
 sidebar_current: "docs-oci-datasource-identity-swift_passwords"
 description: |-
-  Provides a list of SwiftPasswords
+  Provides the list of Swift Passwords in Oracle Cloud Infrastructure Identity service
 ---
 
 # Data Source: oci_identity_swift_passwords
-The `oci_identity_swift_passwords` data source allows access to the list of OCI swift_passwords
+This data source provides the list of Swift Passwords in Oracle Cloud Infrastructure Identity service.
 
-**Deprecated. Use [ListAuthTokens](https://docs.us-phoenix-1.oraclecloud.com/api/#/en/identity/20160918/AuthToken/ListAuthTokens) instead.**
+**Deprecated. Use [ListAuthTokens](https://docs.cloud.oracle.com/iaas/api/#/en/identity/20160918/AuthToken/ListAuthTokens) instead.**
 
 Lists the Swift passwords for the specified user. The returned object contains the password's OCID, but not
 the password itself. The actual password is returned only upon creation.
@@ -46,7 +46,7 @@ The following attributes are exported:
 * `id` - The OCID of the Swift password.
 * `inactive_state` - The detailed status of INACTIVE lifecycleState.
 * `password` - The Swift password. The value is available only in the response for `CreateSwiftPassword`, and not for `ListSwiftPasswords` or `UpdateSwiftPassword`. 
-* `state` - The password's current state. After creating a password, make sure its `lifecycleState` changes from CREATING to ACTIVE before using it. 
+* `state` - The password's current state.
 * `time_created` - Date and time the `SwiftPassword` object was created, in the format defined by RFC3339.  Example: `2016-08-25T21:10:29.600Z` 
 * `user_id` - The OCID of the user the password belongs to.
 

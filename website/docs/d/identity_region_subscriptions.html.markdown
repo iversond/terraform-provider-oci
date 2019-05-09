@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_identity_region_subscriptions"
+page_title: "Oracle Cloud Infrastructure: oci_identity_region_subscriptions"
 sidebar_current: "docs-oci-datasource-identity-region_subscriptions"
 description: |-
-  Provides a list of RegionSubscriptions
+  Provides the list of Region Subscriptions in Oracle Cloud Infrastructure Identity service
 ---
 
 # Data Source: oci_identity_region_subscriptions
-The `oci_identity_region_subscriptions` data source allows access to the list of OCI region_subscriptions
+This data source provides the list of Region Subscriptions in Oracle Cloud Infrastructure Identity service.
 
 Lists the region subscriptions for the specified tenancy.
 
@@ -38,7 +38,19 @@ The following attributes are exported:
 The following attributes are exported:
 
 * `is_home_region` - Indicates if the region is the home region or not.
-* `region_key` - The region's key.  Allowed values are: - `PHX` - `IAD` - `FRA` - `LHR` 
-* `region_name` - The region's name.  Allowed values are: - `us-phoenix-1` - `us-ashburn-1` - `eu-frankurt-1` - `uk-london-1` 
+* `region_key` - The region's key.
+
+	Allowed values are:
+	* `PHX`
+	* `IAD`
+	* `FRA`
+	* `LHR` 
+* `region_name` - The region's name.
+
+	Allowed values are:
+	* `us-phoenix-1`
+	* `us-ashburn-1`
+	* `eu-frankurt-1`
+	* `uk-london-1` 
 * `state` - The region subscription state.
 

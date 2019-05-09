@@ -16,8 +16,8 @@ import (
 // ImageSourceDetails The representation of ImageSourceDetails
 type ImageSourceDetails interface {
 
-	// The format of the image to be imported.  Exported Oracle images are QCOW2.  Only monolithic
-	// images are supported.
+	// The format of the image to be imported.  Only monolithic
+	// images are supported. This attribute is not used for exported Oracle images with the OCI image format.
 	GetSourceImageType() ImageSourceDetailsSourceImageTypeEnum
 }
 
@@ -46,6 +46,11 @@ func (m *imagesourcedetails) UnmarshalJSON(data []byte) error {
 
 // UnmarshalPolymorphicJSON unmarshals polymorphic json
 func (m *imagesourcedetails) UnmarshalPolymorphicJSON(data []byte) (interface{}, error) {
+
+	if data == nil || string(data) == "null" {
+		return nil, nil
+	}
+
 	var err error
 	switch m.SourceType {
 	case "objectStorageTuple":
@@ -57,7 +62,7 @@ func (m *imagesourcedetails) UnmarshalPolymorphicJSON(data []byte) (interface{},
 		err = json.Unmarshal(data, &mm)
 		return mm, err
 	default:
-		return m, nil
+		return *m, nil
 	}
 }
 
@@ -73,7 +78,7 @@ func (m imagesourcedetails) String() string {
 // ImageSourceDetailsSourceImageTypeEnum Enum with underlying type: string
 type ImageSourceDetailsSourceImageTypeEnum string
 
-// Set of constants representing the allowable values for ImageSourceDetailsSourceImageType
+// Set of constants representing the allowable values for ImageSourceDetailsSourceImageTypeEnum
 const (
 	ImageSourceDetailsSourceImageTypeQcow2 ImageSourceDetailsSourceImageTypeEnum = "QCOW2"
 	ImageSourceDetailsSourceImageTypeVmdk  ImageSourceDetailsSourceImageTypeEnum = "VMDK"
@@ -84,7 +89,7 @@ var mappingImageSourceDetailsSourceImageType = map[string]ImageSourceDetailsSour
 	"VMDK":  ImageSourceDetailsSourceImageTypeVmdk,
 }
 
-// GetImageSourceDetailsSourceImageTypeEnumValues Enumerates the set of values for ImageSourceDetailsSourceImageType
+// GetImageSourceDetailsSourceImageTypeEnumValues Enumerates the set of values for ImageSourceDetailsSourceImageTypeEnum
 func GetImageSourceDetailsSourceImageTypeEnumValues() []ImageSourceDetailsSourceImageTypeEnum {
 	values := make([]ImageSourceDetailsSourceImageTypeEnum, 0)
 	for _, v := range mappingImageSourceDetailsSourceImageType {

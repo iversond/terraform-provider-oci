@@ -1,19 +1,19 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_objectstorage_objects"
+page_title: "Oracle Cloud Infrastructure: oci_objectstorage_objects"
 sidebar_current: "docs-oci-datasource-object_storage-objects"
 description: |-
-  Provides a list of Objects
+  Provides the list of Objects in Oracle Cloud Infrastructure Object Storage service
 ---
 
 # Data Source: oci_objectstorage_objects
-The `oci_objectstorage_objects` data source allows access to the list of OCI objects
+This data source provides the list of Objects in Oracle Cloud Infrastructure Object Storage service.
 
 Lists the objects in a bucket.
 
-To use this and other API operations, you must be authorized in an IAM policy. If you're not authorized,
-talk to an administrator. If you're an administrator who needs to write policies to give users access, see
-[Getting Started with Policies](https://docs.us-phoenix-1.oraclecloud.com/Content/Identity/Concepts/policygetstarted.htm).
+To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized,
+talk to an administrator. If you are an administrator who needs to write policies to give users access, see
+[Getting Started with Policies](https://docs.cloud.oracle.com/iaas/Content/Identity/Concepts/policygetstarted.htm).
 
 
 ## Example Usage
@@ -39,7 +39,7 @@ The following arguments are supported:
 * `bucket` - (Required) The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` 
 * `delimiter` - (Optional) When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time. 
 * `end` - (Optional) Object names returned by a list query must be strictly less than this parameter.
-* `namespace` - (Required) The top-level namespace used for the request.
+* `namespace` - (Required) The Object Storage namespace used for the request.
 * `prefix` - (Optional) The string to use for matching against the start of object names in a list query.
 * `start` - (Optional) Object names returned by a list query must be greater or equal to this parameter.
 

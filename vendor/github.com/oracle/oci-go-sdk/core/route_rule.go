@@ -18,7 +18,7 @@ type RouteRule struct {
 
 	// The OCID for the route rule's target. For information about the type of
 	// targets you can specify, see
-	// Route Tables (https://docs.us-phoenix-1.oraclecloud.com/Content/Network/Tasks/managingroutetables.htm).
+	// Route Tables (https://docs.cloud.oracle.com/Content/Network/Tasks/managingroutetables.htm).
 	NetworkEntityId *string `mandatory:"true" json:"networkEntityId"`
 
 	// Deprecated. Instead use `destination` and `destinationType`. Requests that include both
@@ -52,7 +52,7 @@ func (m RouteRule) String() string {
 // RouteRuleDestinationTypeEnum Enum with underlying type: string
 type RouteRuleDestinationTypeEnum string
 
-// Set of constants representing the allowable values for RouteRuleDestinationType
+// Set of constants representing the allowable values for RouteRuleDestinationTypeEnum
 const (
 	RouteRuleDestinationTypeCidrBlock        RouteRuleDestinationTypeEnum = "CIDR_BLOCK"
 	RouteRuleDestinationTypeServiceCidrBlock RouteRuleDestinationTypeEnum = "SERVICE_CIDR_BLOCK"
@@ -63,7 +63,7 @@ var mappingRouteRuleDestinationType = map[string]RouteRuleDestinationTypeEnum{
 	"SERVICE_CIDR_BLOCK": RouteRuleDestinationTypeServiceCidrBlock,
 }
 
-// GetRouteRuleDestinationTypeEnumValues Enumerates the set of values for RouteRuleDestinationType
+// GetRouteRuleDestinationTypeEnumValues Enumerates the set of values for RouteRuleDestinationTypeEnum
 func GetRouteRuleDestinationTypeEnumValues() []RouteRuleDestinationTypeEnum {
 	values := make([]RouteRuleDestinationTypeEnum, 0)
 	for _, v := range mappingRouteRuleDestinationType {

@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_containerengine_node_pool_option"
+page_title: "Oracle Cloud Infrastructure: oci_containerengine_node_pool_option"
 sidebar_current: "docs-oci-datasource-containerengine-node_pool_option"
 description: |-
-  Provides details about a specific NodePoolOption
+  Provides details about a specific Node Pool Option in Oracle Cloud Infrastructure Container Engine service
 ---
 
 # Data Source: oci_containerengine_node_pool_option
-The `oci_containerengine_node_pool_option` data source provides details about a specific NodePoolOption
+This data source provides details about a specific Node Pool Option resource in Oracle Cloud Infrastructure Container Engine service.
 
 Get options available for node pools.
 
@@ -24,7 +24,7 @@ data "oci_containerengine_node_pool_option" "test_node_pool_option" {
 
 The following arguments are supported:
 
-* `node_pool_option_id` - (Required) The id of the option set to retrieve. Only "all" is supported.
+* `node_pool_option_id` - (Required) The id of the option set to retrieve. Use "all" get all options, or use a cluster ID to get options specific to the provided cluster.
 
 
 ## Attributes Reference

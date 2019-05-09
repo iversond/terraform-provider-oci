@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_email_senders"
+page_title: "Oracle Cloud Infrastructure: oci_email_senders"
 sidebar_current: "docs-oci-datasource-email-senders"
 description: |-
-  Provides a list of Senders
+  Provides the list of Senders in Oracle Cloud Infrastructure Email service
 ---
 
 # Data Source: oci_email_senders
-The `oci_email_senders` data source allows access to the list of OCI senders
+This data source provides the list of Senders in Oracle Cloud Infrastructure Email service.
 
 Gets a collection of approved sender email addresses and sender IDs.
 
@@ -44,9 +44,12 @@ The following attributes are exported:
 
 The following attributes are exported:
 
+* `compartment_id` - The OCID for the compartment.
+* `defined_tags` - Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/resourcetags.htm). Example: `{"Operations.CostCenter": "42"}` 
 * `email_address` - The email address of the sender.
+* `freeform_tags` - Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/resourcetags.htm). Example: `{"Department": "Finance"}` 
 * `id` - The unique OCID of the sender.
-* `is_spf` - Value of the SPF field. For more information about SPF, please see [SPF Authentication](https://docs.us-phoenix-1.oraclecloud.com/Content/Email/Concepts/emaildeliveryoverview.htm#spf). 
+* `is_spf` - Value of the SPF field. For more information about SPF, please see [SPF Authentication](https://docs.cloud.oracle.com/iaas/Content/Email/Concepts/overview.htm#components). 
 * `state` - The current status of the approved sender.
 * `time_created` - The date and time the approved sender was added in "YYYY-MM-ddThh:mmZ" format with a Z offset, as defined by RFC 3339. 
 

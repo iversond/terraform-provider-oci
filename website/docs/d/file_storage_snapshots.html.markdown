@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_file_storage_snapshots"
+page_title: "Oracle Cloud Infrastructure: oci_file_storage_snapshots"
 sidebar_current: "docs-oci-datasource-file_storage-snapshots"
 description: |-
-  Provides a list of Snapshots
+  Provides the list of Snapshots in Oracle Cloud Infrastructure File Storage service
 ---
 
 # Data Source: oci_file_storage_snapshots
-The `oci_file_storage_snapshots` data source allows access to the list of OCI snapshots
+This data source provides the list of Snapshots in Oracle Cloud Infrastructure File Storage service.
 
 Lists snapshots of the specified file system.
 
@@ -44,9 +44,15 @@ The following attributes are exported:
 
 The following attributes are exported:
 
+* `defined_tags` - Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/resourcetags.htm). Example: `{"Operations.CostCenter": "42"}` 
 * `file_system_id` - The OCID of the file system from which the snapshot was created. 
+* `freeform_tags` - Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/resourcetags.htm). Example: `{"Department": "Finance"}` 
 * `id` - The OCID of the snapshot.
-* `name` - Name of the snapshot. This value is immutable.  Avoid entering confidential information.  Example: `Sunday` 
+* `name` - Name of the snapshot. This value is immutable.
+
+	Avoid entering confidential information.
+
+	Example: `Sunday` 
 * `state` - The current state of the snapshot.
 * `time_created` - The date and time the snapshot was created, expressed in [RFC 3339](https://tools.ietf.org/rfc/rfc3339) timestamp format.  Example: `2016-08-25T21:10:29.600Z` 
 

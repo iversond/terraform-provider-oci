@@ -1,8 +1,5 @@
-#!/bin/bash
-
-if [ -n "${IGNORE_PRE_PUSH_HOOK}" ]; then
-	exit 0
-fi
+#!/usr/bin/env bash
+# Copyright (c) 2017, 2019, Oracle and/or its affiliates. All rights reserved.
 
 set -e
 
@@ -37,4 +34,3 @@ do
 
     fi
 done
-

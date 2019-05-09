@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_objectstorage_preauthrequests"
-sidebar_current: "docs-oci-datasource-object_storage-preauthenticated_requests"
+page_title: "Oracle Cloud Infrastructure: oci_objectstorage_preauthrequests"
+sidebar_current: "docs-oci-datasource-object_storage-preauthrequests"
 description: |-
-  Provides a list of PreauthenticatedRequests
+  Provides the list of Preauthenticated Requests in Oracle Cloud Infrastructure Object Storage service
 ---
 
 # Data Source: oci_objectstorage_preauthrequests
-The `oci_objectstorage_preauthrequests` data source allows access to the list of OCI preauthenticated_requests
+This data source provides the list of Preauthenticated Requests in Oracle Cloud Infrastructure Object Storage service.
 
 Lists pre-authenticated requests for the bucket.
 
@@ -30,7 +30,7 @@ data "oci_objectstorage_preauthrequests" "test_preauthenticated_requests" {
 The following arguments are supported:
 
 * `bucket` - (Required) The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1` 
-* `namespace` - (Required) The top-level namespace used for the request.
+* `namespace` - (Required) The Object Storage namespace used for the request.
 * `object_name_prefix` - (Optional) User-specified object name prefixes can be used to query and return a list of pre-authenticated requests.
 
 
@@ -49,8 +49,8 @@ The following attributes are exported:
 * `bucket` - The name of the bucket.  Example: `my-new-bucket1` 
 * `id` - The unique identifier to use when directly addressing the pre-authenticated request.
 * `name` - The user-provided name of the pre-authenticated request.
-* `namespace` - The top-level namespace used for the request.
-* `object` - The name of object that is being granted access to by the pre-authenticated request. This can be null and if it is, the pre-authenticated request grants access to the entire bucket.
-* `time_created` - The date when the pre-authenticated request was created as per [RFC 3339](https://tools.ietf.org/rfc/rfc3339). 
+* `namespace` - The Object Storage namespace used for the request.
+* `object` - The name of the object that is being granted access to by the pre-authenticated request. Avoid entering confidential information. The object name can be null and if so, the pre-authenticated request grants access to the entire bucket. 
+* `time_created` - The date when the pre-authenticated request was created as per specification [RFC 3339](https://tools.ietf.org/rfc/rfc3339). 
 * `time_expires` - The expiration date for the pre-authenticated request as per [RFC 3339](https://tools.ietf.org/rfc/rfc3339). After this date the pre-authenticated request will no longer be valid. 
 

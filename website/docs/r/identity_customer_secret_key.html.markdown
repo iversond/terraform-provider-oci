@@ -1,21 +1,21 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_identity_customer_secret_key"
+page_title: "Oracle Cloud Infrastructure: oci_identity_customer_secret_key"
 sidebar_current: "docs-oci-resource-identity-customer_secret_key"
 description: |-
-  Creates and manages an OCI CustomerSecretKey
+  Provides the Customer Secret Key resource in Oracle Cloud Infrastructure Identity service
 ---
 
 # oci_identity_customer_secret_key
-The `oci_identity_customer_secret_key` resource creates and manages an OCI CustomerSecretKey
+This resource provides the Customer Secret Key resource in Oracle Cloud Infrastructure Identity service.
 
 Creates a new secret key for the specified user. Secret keys are used for authentication with the Object Storage Service's Amazon S3
 compatible API. For information, see
-[Managing User Credentials](https://docs.us-phoenix-1.oraclecloud.com/Content/Identity/Tasks/managingcredentials.htm).
+[Managing User Credentials](https://docs.cloud.oracle.com/iaas/Content/Identity/Tasks/managingcredentials.htm).
 
 You must specify a *description* for the secret key (although it can be an empty string). It does not
 have to be unique, and you can change it anytime with
-[UpdateCustomerSecretKey](https://docs.us-phoenix-1.oraclecloud.com/api/#/en/identity/20160918/CustomerSecretKeySummary/UpdateCustomerSecretKey).
+[UpdateCustomerSecretKey](https://docs.cloud.oracle.com/iaas/api/#/en/identity/20160918/CustomerSecretKeySummary/UpdateCustomerSecretKey).
 
 Every user has permission to create a secret key for *their own user ID*. An administrator in your organization
 does not need to write a policy to give users this ability. To compare, administrators who have permission to the
@@ -37,6 +37,7 @@ resource "oci_identity_customer_secret_key" "test_customer_secret_key" {
 The following arguments are supported:
 
 * `display_name` - (Required) (Updatable) The name you assign to the secret key during creation. Does not have to be unique, and it's changeable. 
+* `user_id` - (Required) The OCID of the user.
 
 
 ** IMPORTANT **
@@ -46,10 +47,12 @@ Any change to a property that does not support update will force the destruction
 
 The following attributes are exported:
 
-* `display_name` - The displayName you assign to the secret key. Does not have to be unique, and it's changeable.
+* `display_name` - The display name you assign to the secret key. Does not have to be unique, and it's changeable.
 * `id` - The OCID of the secret key.
 * `inactive_state` - The detailed status of INACTIVE lifecycleState.
-* `state` - The secret key's current state. After creating a secret key, make sure its `lifecycleState` changes from CREATING to ACTIVE before using it. 
+* `key` - The secret key. 
+* `state` - The secret key's current state.
 * `time_created` - Date and time the `CustomerSecretKey` object was created, in the format defined by RFC3339.  Example: `2016-08-25T21:10:29.600Z` 
 * `time_expires` - Date and time when this password will expire, in the format defined by RFC3339. Null if it never expires.  Example: `2016-08-25T21:10:29.600Z` 
 * `user_id` - The OCID of the user the password belongs to.
+

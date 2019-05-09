@@ -1,16 +1,16 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_identity_idp_group_mapping"
+page_title: "Oracle Cloud Infrastructure: oci_identity_idp_group_mapping"
 sidebar_current: "docs-oci-resource-identity-idp_group_mapping"
 description: |-
-  Creates and manages an OCI IdpGroupMapping
+  Provides the Idp Group Mapping resource in Oracle Cloud Infrastructure Identity service
 ---
 
 # oci_identity_idp_group_mapping
-The `oci_identity_idp_group_mapping` resource creates and manages an OCI IdpGroupMapping
+This resource provides the Idp Group Mapping resource in Oracle Cloud Infrastructure Identity service.
 
 Creates a single mapping between an IdP group and an IAM Service
-[group](https://docs.us-phoenix-1.oraclecloud.com/api/#/en/identity/20160918/Group/).
+[group](https://docs.cloud.oracle.com/iaas/api/#/en/identity/20160918/Group/).
 
 
 ## Example Usage
@@ -28,7 +28,8 @@ resource "oci_identity_idp_group_mapping" "test_idp_group_mapping" {
 
 The following arguments are supported:
 
-* `group_id` - (Required) (Updatable) The OCID of the IAM Service [group](https://docs.us-phoenix-1.oraclecloud.com/api/#/en/identity/20160918/Group/) you want to map to the IdP group. 
+* `group_id` - (Required) (Updatable) The OCID of the IAM Service [group](https://docs.cloud.oracle.com/iaas/api/#/en/identity/20160918/Group/) you want to map to the IdP group. 
+* `identity_provider_id` - (Required) The OCID of the identity provider.
 * `idp_group_name` - (Required) (Updatable) The name of the IdP group you want to map.
 
 
@@ -45,5 +46,6 @@ The following attributes are exported:
 * `identity_provider_id` - The OCID of the `IdentityProvider` this mapping belongs to.
 * `idp_group_name` - The name of the IdP group that is mapped to the IAM Service group.
 * `inactive_state` - The detailed status of INACTIVE lifecycleState.
-* `state` - The mapping's current state.  After creating a mapping object, make sure its `lifecycleState` changes from CREATING to ACTIVE before using it. 
+* `state` - The mapping's current state.
 * `time_created` - Date and time the mapping was created, in the format defined by RFC3339.  Example: `2016-08-25T21:10:29.600Z` 
+

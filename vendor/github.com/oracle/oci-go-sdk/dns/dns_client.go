@@ -1,9 +1,10 @@
 // Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
 // Code generated. DO NOT EDIT.
 
-// Public DNS Service
+// DNS API
 //
-// API for managing DNS zones, records, and policies.
+// API for the DNS service. Use this API to manage DNS zones, records, and other DNS resources.
+// For more information, see Overview of the DNS Service (https://docs.cloud.oracle.com/iaas/Content/DNS/Concepts/dnszonemanagement.htm).
 //
 
 package dns
@@ -37,7 +38,7 @@ func NewDnsClientWithConfigurationProvider(configProvider common.ConfigurationPr
 
 // SetRegion overrides the region of this client.
 func (client *DnsClient) SetRegion(region string) {
-	client.Host = fmt.Sprintf(common.DefaultHostURLTemplate, "dns", region)
+	client.Host = common.StringToRegion(region).Endpoint("dns")
 }
 
 // SetConfigurationProvider sets the configuration provider including the region, returns an error if is not valid
@@ -56,6 +57,105 @@ func (client *DnsClient) setConfigurationProvider(configProvider common.Configur
 // ConfigurationProvider the ConfigurationProvider used in this client, or null if none set
 func (client *DnsClient) ConfigurationProvider() *common.ConfigurationProvider {
 	return client.config
+}
+
+// CreateSteeringPolicy Creates a new steering policy in the specified compartment. For more information on
+// creating policies with templates, see Traffic Management API Guide (https://docs.cloud.oracle.com/iaas/Content/TrafficManagement/Concepts/trafficmanagementapi.htm).
+func (client DnsClient) CreateSteeringPolicy(ctx context.Context, request CreateSteeringPolicyRequest) (response CreateSteeringPolicyResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+
+	if !(request.OpcRetryToken != nil && *request.OpcRetryToken != "") {
+		request.OpcRetryToken = common.String(common.RetryToken())
+	}
+
+	ociResponse, err = common.Retry(ctx, request, client.createSteeringPolicy, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = CreateSteeringPolicyResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(CreateSteeringPolicyResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into CreateSteeringPolicyResponse")
+	}
+	return
+}
+
+// createSteeringPolicy implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) createSteeringPolicy(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodPost, "/steeringPolicies")
+	if err != nil {
+		return nil, err
+	}
+
+	var response CreateSteeringPolicyResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
+// CreateSteeringPolicyAttachment Creates a new attachment between a steering policy and a domain, giving the
+// policy permission to answer queries for the specified domain. A steering policy must
+// be attached to a domain for the policy to answer DNS queries for that domain.
+// For the purposes of access control, the attachment is automatically placed
+// into the same compartment as the domain's zone.
+func (client DnsClient) CreateSteeringPolicyAttachment(ctx context.Context, request CreateSteeringPolicyAttachmentRequest) (response CreateSteeringPolicyAttachmentResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+
+	if !(request.OpcRetryToken != nil && *request.OpcRetryToken != "") {
+		request.OpcRetryToken = common.String(common.RetryToken())
+	}
+
+	ociResponse, err = common.Retry(ctx, request, client.createSteeringPolicyAttachment, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = CreateSteeringPolicyAttachmentResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(CreateSteeringPolicyAttachmentResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into CreateSteeringPolicyAttachmentResponse")
+	}
+	return
+}
+
+// createSteeringPolicyAttachment implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) createSteeringPolicyAttachment(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodPost, "/steeringPolicyAttachments")
+	if err != nil {
+		return nil, err
+	}
+
+	var response CreateSteeringPolicyAttachmentResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
 }
 
 // CreateZone Creates a new zone in the specified compartment. The `compartmentId`
@@ -186,8 +286,96 @@ func (client DnsClient) deleteRRSet(ctx context.Context, request common.OCIReque
 	return response, err
 }
 
-// DeleteZone Deletes the specified zone. A `204` response indicates that zone has been
-// successfully deleted.
+// DeleteSteeringPolicy Deletes the specified steering policy.
+// A `204` response indicates that the delete has been successful.
+// Deletion will fail if the policy is attached to any zones. To detach a
+// policy from a zone, see `DeleteSteeringPolicyAttachment`.
+func (client DnsClient) DeleteSteeringPolicy(ctx context.Context, request DeleteSteeringPolicyRequest) (response DeleteSteeringPolicyResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+	ociResponse, err = common.Retry(ctx, request, client.deleteSteeringPolicy, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = DeleteSteeringPolicyResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(DeleteSteeringPolicyResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into DeleteSteeringPolicyResponse")
+	}
+	return
+}
+
+// deleteSteeringPolicy implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) deleteSteeringPolicy(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodDelete, "/steeringPolicies/{steeringPolicyId}")
+	if err != nil {
+		return nil, err
+	}
+
+	var response DeleteSteeringPolicyResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
+// DeleteSteeringPolicyAttachment Deletes the specified steering policy attachment.
+// A `204` response indicates that the delete has been successful.
+func (client DnsClient) DeleteSteeringPolicyAttachment(ctx context.Context, request DeleteSteeringPolicyAttachmentRequest) (response DeleteSteeringPolicyAttachmentResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+	ociResponse, err = common.Retry(ctx, request, client.deleteSteeringPolicyAttachment, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = DeleteSteeringPolicyAttachmentResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(DeleteSteeringPolicyAttachmentResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into DeleteSteeringPolicyAttachmentResponse")
+	}
+	return
+}
+
+// deleteSteeringPolicyAttachment implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) deleteSteeringPolicyAttachment(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodDelete, "/steeringPolicyAttachments/{steeringPolicyAttachmentId}")
+	if err != nil {
+		return nil, err
+	}
+
+	var response DeleteSteeringPolicyAttachmentResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
+// DeleteZone Deletes the specified zone and all its steering policy attachments.
+// A `204` response indicates that zone has been successfully deleted.
 func (client DnsClient) DeleteZone(ctx context.Context, request DeleteZoneRequest) (response DeleteZoneResponse, err error) {
 	var ociResponse common.OCIResponse
 	policy := common.NoRetryPolicy()
@@ -316,6 +504,90 @@ func (client DnsClient) getRRSet(ctx context.Context, request common.OCIRequest)
 	return response, err
 }
 
+// GetSteeringPolicy Gets information about the specified steering policy.
+func (client DnsClient) GetSteeringPolicy(ctx context.Context, request GetSteeringPolicyRequest) (response GetSteeringPolicyResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+	ociResponse, err = common.Retry(ctx, request, client.getSteeringPolicy, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = GetSteeringPolicyResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(GetSteeringPolicyResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into GetSteeringPolicyResponse")
+	}
+	return
+}
+
+// getSteeringPolicy implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) getSteeringPolicy(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodGet, "/steeringPolicies/{steeringPolicyId}")
+	if err != nil {
+		return nil, err
+	}
+
+	var response GetSteeringPolicyResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
+// GetSteeringPolicyAttachment Gets information about the specified steering policy attachment.
+func (client DnsClient) GetSteeringPolicyAttachment(ctx context.Context, request GetSteeringPolicyAttachmentRequest) (response GetSteeringPolicyAttachmentResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+	ociResponse, err = common.Retry(ctx, request, client.getSteeringPolicyAttachment, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = GetSteeringPolicyAttachmentResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(GetSteeringPolicyAttachmentResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into GetSteeringPolicyAttachmentResponse")
+	}
+	return
+}
+
+// getSteeringPolicyAttachment implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) getSteeringPolicyAttachment(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodGet, "/steeringPolicyAttachments/{steeringPolicyAttachmentId}")
+	if err != nil {
+		return nil, err
+	}
+
+	var response GetSteeringPolicyAttachmentResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
 // GetZone Gets information about the specified zone, including its creation date,
 // zone type, and serial.
 func (client DnsClient) GetZone(ctx context.Context, request GetZoneRequest) (response GetZoneResponse, err error) {
@@ -361,7 +633,7 @@ func (client DnsClient) getZone(ctx context.Context, request common.OCIRequest) 
 
 // GetZoneRecords Gets all records in the specified zone. The results are
 // sorted by `domain` in alphabetical order by default. For more
-// information about records, please see Resource Record (RR) TYPEs (https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4).
+// information about records, see Resource Record (RR) TYPEs (https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4).
 func (client DnsClient) GetZoneRecords(ctx context.Context, request GetZoneRecordsRequest) (response GetZoneRecordsResponse, err error) {
 	var ociResponse common.OCIResponse
 	policy := common.NoRetryPolicy()
@@ -391,6 +663,90 @@ func (client DnsClient) getZoneRecords(ctx context.Context, request common.OCIRe
 	}
 
 	var response GetZoneRecordsResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
+// ListSteeringPolicies Gets a list of all steering policies in the specified compartment.
+func (client DnsClient) ListSteeringPolicies(ctx context.Context, request ListSteeringPoliciesRequest) (response ListSteeringPoliciesResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+	ociResponse, err = common.Retry(ctx, request, client.listSteeringPolicies, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = ListSteeringPoliciesResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(ListSteeringPoliciesResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into ListSteeringPoliciesResponse")
+	}
+	return
+}
+
+// listSteeringPolicies implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) listSteeringPolicies(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodGet, "/steeringPolicies")
+	if err != nil {
+		return nil, err
+	}
+
+	var response ListSteeringPoliciesResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
+// ListSteeringPolicyAttachments Lists the steering policy attachments in the specified compartment.
+func (client DnsClient) ListSteeringPolicyAttachments(ctx context.Context, request ListSteeringPolicyAttachmentsRequest) (response ListSteeringPolicyAttachmentsResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+	ociResponse, err = common.Retry(ctx, request, client.listSteeringPolicyAttachments, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = ListSteeringPolicyAttachmentsResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(ListSteeringPolicyAttachmentsResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into ListSteeringPolicyAttachmentsResponse")
+	}
+	return
+}
+
+// listSteeringPolicyAttachments implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) listSteeringPolicyAttachments(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodGet, "/steeringPolicyAttachments")
+	if err != nil {
+		return nil, err
+	}
+
+	var response ListSteeringPolicyAttachmentsResponse
 	var httpResponse *http.Response
 	httpResponse, err = client.Call(ctx, &httpRequest)
 	defer common.CloseBodyIfValid(httpResponse)
@@ -446,7 +802,10 @@ func (client DnsClient) listZones(ctx context.Context, request common.OCIRequest
 	return response, err
 }
 
-// PatchDomainRecords Replaces records in the specified zone at a domain. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function.
+// PatchDomainRecords Updates records in the specified zone at a domain. You can update
+// one record or all records for the specified zone depending on the changes
+// provided in the request body. You can also add or remove records using this
+// function.
 func (client DnsClient) PatchDomainRecords(ctx context.Context, request PatchDomainRecordsRequest) (response PatchDomainRecordsResponse, err error) {
 	var ociResponse common.OCIResponse
 	policy := common.NoRetryPolicy()
@@ -664,9 +1023,93 @@ func (client DnsClient) updateRRSet(ctx context.Context, request common.OCIReque
 	return response, err
 }
 
+// UpdateSteeringPolicy Updates the configuration of the specified steering policy.
+func (client DnsClient) UpdateSteeringPolicy(ctx context.Context, request UpdateSteeringPolicyRequest) (response UpdateSteeringPolicyResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+	ociResponse, err = common.Retry(ctx, request, client.updateSteeringPolicy, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = UpdateSteeringPolicyResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(UpdateSteeringPolicyResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into UpdateSteeringPolicyResponse")
+	}
+	return
+}
+
+// updateSteeringPolicy implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) updateSteeringPolicy(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodPut, "/steeringPolicies/{steeringPolicyId}")
+	if err != nil {
+		return nil, err
+	}
+
+	var response UpdateSteeringPolicyResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
+// UpdateSteeringPolicyAttachment Updates the specified steering policy attachment with your new information.
+func (client DnsClient) UpdateSteeringPolicyAttachment(ctx context.Context, request UpdateSteeringPolicyAttachmentRequest) (response UpdateSteeringPolicyAttachmentResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+	ociResponse, err = common.Retry(ctx, request, client.updateSteeringPolicyAttachment, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = UpdateSteeringPolicyAttachmentResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(UpdateSteeringPolicyAttachmentResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into UpdateSteeringPolicyAttachmentResponse")
+	}
+	return
+}
+
+// updateSteeringPolicyAttachment implements the OCIOperation interface (enables retrying operations)
+func (client DnsClient) updateSteeringPolicyAttachment(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodPut, "/steeringPolicyAttachments/{steeringPolicyAttachmentId}")
+	if err != nil {
+		return nil, err
+	}
+
+	var response UpdateSteeringPolicyAttachmentResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
 // UpdateZone Updates the specified secondary zone with your new external master
 // server information. For more information about secondary zone, see
-// Manage DNS Service Zone (https://docs.us-phoenix-1.oraclecloud.com/Content/DNS/Tasks/managingdnszones.htm).
+// Manage DNS Service Zone (https://docs.cloud.oracle.com/iaas/Content/DNS/Tasks/managingdnszones.htm).
 func (client DnsClient) UpdateZone(ctx context.Context, request UpdateZoneRequest) (response UpdateZoneResponse, err error) {
 	var ociResponse common.OCIResponse
 	policy := common.NoRetryPolicy()

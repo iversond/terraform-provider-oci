@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_core_cross_connect"
+page_title: "Oracle Cloud Infrastructure: oci_core_cross_connect"
 sidebar_current: "docs-oci-datasource-core-cross_connect"
 description: |-
-  Provides details about a specific CrossConnect
+  Provides details about a specific Cross Connect in Oracle Cloud Infrastructure Core service
 ---
 
 # Data Source: oci_core_cross_connect
-The `oci_core_cross_connect` data source provides details about a specific CrossConnect
+This data source provides details about a specific Cross Connect resource in Oracle Cloud Infrastructure Core service.
 
 Gets the specified cross-connect's information.
 
@@ -16,7 +16,7 @@ Gets the specified cross-connect's information.
 ```hcl
 data "oci_core_cross_connect" "test_cross_connect" {
 	#Required
-	cross_connect_id = "${var.cross_connect_cross_connect_id}"
+	cross_connect_id = "${oci_core_cross_connect.test_cross_connect.id}"
 }
 ```
 
@@ -33,6 +33,7 @@ The following attributes are exported:
 
 * `compartment_id` - The OCID of the compartment containing the cross-connect group.
 * `cross_connect_group_id` - The OCID of the cross-connect group this cross-connect belongs to (if any).
+* `customer_reference_name` - A reference name or identifier for the physical fiber connection that this cross-connect uses. 
 * `display_name` - A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information. 
 * `id` - The cross-connect's Oracle ID (OCID).
 * `location_name` - The name of the FastConnect location where this cross-connect is installed.

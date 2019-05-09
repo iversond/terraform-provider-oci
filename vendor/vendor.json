@@ -465,6 +465,14 @@
 			"revisionTime": "2018-07-12T17:48:35Z"
 		},
 		{
+			"checksumSHA1": "qVmQPoZmJ2w2OnaxIheWfuwun6g=",
+			"path": "github.com/hashicorp/terraform/helper/customdiff",
+			"revision": "41e50bd32a8825a84535e353c3674af8ce799161",
+			"revisionTime": "2018-04-10T16:50:42Z",
+			"version": "=v0.11.7",
+			"versionExact": "v0.11.7"
+		},
+		{
 			"checksumSHA1": "KNvbU1r5jv0CBeQLnEtDoL3dRtc=",
 			"path": "github.com/hashicorp/terraform/helper/hashcode",
 			"revision": "41e50bd32a8825a84535e353c3674af8ce799161",
@@ -493,12 +501,11 @@
 			"versionExact": "v0.11.7"
 		},
 		{
-			"checksumSHA1": "JHxGzmxcIS8NyLX9pGhK5beIra4=",
+			"__comment": "This package has been modified locally in vendor folder due to Terraform Issue: https://github.com/hashicorp/terraform/issues/19978",
+			"checksumSHA1": "pL2ZDLpzWq1UxqZIc2ucNEROIMc=",
 			"path": "github.com/hashicorp/terraform/helper/schema",
-			"revision": "41e50bd32a8825a84535e353c3674af8ce799161",
-			"revisionTime": "2018-04-10T16:50:42Z",
-			"version": "=v0.11.7",
-			"versionExact": "v0.11.7"
+			"revision": "b9950eb68da97c05e061df3acf51b2480110b65e",
+			"revisionTime": "2019-01-11T00:36:54Z"
 		},
 		{
 			"checksumSHA1": "Fzbv+N7hFXOtrR6E7ZcHT3jEE9s=",
@@ -623,10 +630,6 @@
 			"revisionTime": "2017-11-07T05:05:31Z"
 		},
 		{
-			"path": "github.com/mattn/go-shellwords",
-			"revision": ""
-		},
-		{
 			"checksumSHA1": "FpWlypAjr+w5Q6uQybVbNfwmlp8=",
 			"path": "github.com/mitchellh/cli",
 			"revision": "c48282d14eba4b0817ddef3f832ff8d13851aefd",
@@ -681,11 +684,13 @@
 			"revisionTime": "2018-03-08T00:51:04Z"
 		},
 		{
-			"checksumSHA1": "3rzMLTn/16C/pK7JZeHQnJrUItg=",
+			"checksumSHA1": "6L1mB0KRf8mIQBs9/ssq37d2ky4=",
 			"path": "github.com/oracle/oci-go-sdk",
-			"revision": "13f0c3a30006fd52fe0876c337e1abf740d86cbd",
-			"revisionTime": "2018-08-01T22:35:00Z",
-			"tree": true
+			"revision": "9ed9700756ebdedc96eaefcccf9322afbd4009ef",
+			"revisionTime": "2019-04-16T16:36:15Z",
+			"tree": true,
+			"version": "=v5.4.0",
+			"versionExact": "v5.4.0"
 		},
 		{
 			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
@@ -1114,5 +1119,5 @@
 			"revisionTime": "2018-07-18T21:09:07Z"
 		}
 	],
-	"rootPath": "github.com/oracle/terraform-provider-oci"
+	"rootPath": "github.com/terraform-providers/terraform-provider-oci"
 }

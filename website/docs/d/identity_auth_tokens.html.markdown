@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_identity_auth_tokens"
+page_title: "Oracle Cloud Infrastructure: oci_identity_auth_tokens"
 sidebar_current: "docs-oci-datasource-identity-auth_tokens"
 description: |-
-  Provides a list of AuthTokens
+  Provides the list of Auth Tokens in Oracle Cloud Infrastructure Identity service
 ---
 
 # Data Source: oci_identity_auth_tokens
-The `oci_identity_auth_tokens` data source allows access to the list of OCI auth_tokens
+This data source provides the list of Auth Tokens in Oracle Cloud Infrastructure Identity service.
 
 Lists the auth tokens for the specified user. The returned object contains the token's OCID, but not
 the token itself. The actual token is returned only upon creation.
@@ -42,7 +42,7 @@ The following attributes are exported:
 * `description` - The description you assign to the auth token. Does not have to be unique, and it's changeable.
 * `id` - The OCID of the auth token.
 * `inactive_state` - The detailed status of INACTIVE lifecycleState.
-* `state` - The token's current state. After creating an auth token, make sure its `lifecycleState` changes from CREATING to ACTIVE before using it. 
+* `state` - The token's current state.
 * `time_created` - Date and time the `AuthToken` object was created, in the format defined by RFC3339.  Example: `2016-08-25T21:10:29.600Z` 
 * `time_expires` - Date and time when this auth token will expire, in the format defined by RFC3339. Null if it never expires.  Example: `2016-08-25T21:10:29.600Z` 
 * `token` - The auth token. The value is available only in the response for `CreateAuthToken`, and not for `ListAuthTokens` or `UpdateAuthToken`. 

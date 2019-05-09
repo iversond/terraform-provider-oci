@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_file_storage_mount_targets"
+page_title: "Oracle Cloud Infrastructure: oci_file_storage_mount_targets"
 sidebar_current: "docs-oci-datasource-file_storage-mount_targets"
 description: |-
-  Provides a list of MountTargets
+  Provides the list of Mount Targets in Oracle Cloud Infrastructure File Storage service
 ---
 
 # Data Source: oci_file_storage_mount_targets
-The `oci_file_storage_mount_targets` data source allows access to the list of OCI mount_targets
+This data source provides the list of Mount Targets in Oracle Cloud Infrastructure File Storage service.
 
 Lists the mount target resources in the specified compartment.
 
@@ -52,8 +52,10 @@ The following attributes are exported:
 
 * `availability_domain` - The availability domain the mount target is in. May be unset as a blank or NULL value.  Example: `Uocm:PHX-AD-1` 
 * `compartment_id` - The OCID of the compartment that contains the mount target.
+* `defined_tags` - Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/resourcetags.htm). Example: `{"Operations.CostCenter": "42"}` 
 * `display_name` - A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.  Example: `My mount target` 
 * `export_set_id` - The OCID of the associated export set. Controls what file systems will be exported through Network File System (NFS) protocol on this mount target. 
+* `freeform_tags` - Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/resourcetags.htm). Example: `{"Department": "Finance"}` 
 * `id` - The OCID of the mount target.
 * `lifecycle_details` - Additional information about the current 'lifecycleState'.
 * `private_ip_ids` - The OCIDs of the private IP addresses associated with this mount target.

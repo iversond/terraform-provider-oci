@@ -17,10 +17,12 @@ import (
 // For specific details about iSCSI attachments, see
 // IScsiVolumeAttachment.
 // For general information about volume attachments, see
-// Overview of Block Volume Storage (https://docs.us-phoenix-1.oraclecloud.com/Content/Block/Concepts/overview.htm).
+// Overview of Block Volume Storage (https://docs.cloud.oracle.com/Content/Block/Concepts/overview.htm).
+// **Warning:** Oracle recommends that you avoid using any confidential information when you
+// supply string values using the API.
 type VolumeAttachment interface {
 
-	// The Availability Domain of an instance.
+	// The availability domain of an instance.
 	// Example: `Uocm:PHX-AD-1`
 	GetAvailabilityDomain() *string
 
@@ -43,6 +45,9 @@ type VolumeAttachment interface {
 	// The OCID of the volume.
 	GetVolumeId() *string
 
+	// The device name.
+	GetDevice() *string
+
 	// A user-friendly name. Does not have to be unique, and it cannot be changed.
 	// Avoid entering confidential information.
 	// Example: `My volume attachment`
@@ -50,20 +55,25 @@ type VolumeAttachment interface {
 
 	// Whether the attachment was created in read-only mode.
 	GetIsReadOnly() *bool
+
+	// Whether in-transit encryption for the data volume's paravirtualized attachment is enabled or not.
+	GetIsPvEncryptionInTransitEnabled() *bool
 }
 
 type volumeattachment struct {
-	JsonData           []byte
-	AvailabilityDomain *string                            `mandatory:"true" json:"availabilityDomain"`
-	CompartmentId      *string                            `mandatory:"true" json:"compartmentId"`
-	Id                 *string                            `mandatory:"true" json:"id"`
-	InstanceId         *string                            `mandatory:"true" json:"instanceId"`
-	LifecycleState     VolumeAttachmentLifecycleStateEnum `mandatory:"true" json:"lifecycleState"`
-	TimeCreated        *common.SDKTime                    `mandatory:"true" json:"timeCreated"`
-	VolumeId           *string                            `mandatory:"true" json:"volumeId"`
-	DisplayName        *string                            `mandatory:"false" json:"displayName"`
-	IsReadOnly         *bool                              `mandatory:"false" json:"isReadOnly"`
-	AttachmentType     string                             `json:"attachmentType"`
+	JsonData                       []byte
+	AvailabilityDomain             *string                            `mandatory:"true" json:"availabilityDomain"`
+	CompartmentId                  *string                            `mandatory:"true" json:"compartmentId"`
+	Id                             *string                            `mandatory:"true" json:"id"`
+	InstanceId                     *string                            `mandatory:"true" json:"instanceId"`
+	LifecycleState                 VolumeAttachmentLifecycleStateEnum `mandatory:"true" json:"lifecycleState"`
+	TimeCreated                    *common.SDKTime                    `mandatory:"true" json:"timeCreated"`
+	VolumeId                       *string                            `mandatory:"true" json:"volumeId"`
+	Device                         *string                            `mandatory:"false" json:"device"`
+	DisplayName                    *string                            `mandatory:"false" json:"displayName"`
+	IsReadOnly                     *bool                              `mandatory:"false" json:"isReadOnly"`
+	IsPvEncryptionInTransitEnabled *bool                              `mandatory:"false" json:"isPvEncryptionInTransitEnabled"`
+	AttachmentType                 string                             `json:"attachmentType"`
 }
 
 // UnmarshalJSON unmarshals json
@@ -84,8 +94,10 @@ func (m *volumeattachment) UnmarshalJSON(data []byte) error {
 	m.LifecycleState = s.Model.LifecycleState
 	m.TimeCreated = s.Model.TimeCreated
 	m.VolumeId = s.Model.VolumeId
+	m.Device = s.Model.Device
 	m.DisplayName = s.Model.DisplayName
 	m.IsReadOnly = s.Model.IsReadOnly
+	m.IsPvEncryptionInTransitEnabled = s.Model.IsPvEncryptionInTransitEnabled
 	m.AttachmentType = s.Model.AttachmentType
 
 	return err
@@ -93,6 +105,11 @@ func (m *volumeattachment) UnmarshalJSON(data []byte) error {
 
 // UnmarshalPolymorphicJSON unmarshals polymorphic json
 func (m *volumeattachment) UnmarshalPolymorphicJSON(data []byte) (interface{}, error) {
+
+	if data == nil || string(data) == "null" {
+		return nil, nil
+	}
+
 	var err error
 	switch m.AttachmentType {
 	case "iscsi":
@@ -104,7 +121,7 @@ func (m *volumeattachment) UnmarshalPolymorphicJSON(data []byte) (interface{}, e
 		err = json.Unmarshal(data, &mm)
 		return mm, err
 	default:
-		return m, nil
+		return *m, nil
 	}
 }
 
@@ -143,6 +160,11 @@ func (m volumeattachment) GetVolumeId() *string {
 	return m.VolumeId
 }
 
+//GetDevice returns Device
+func (m volumeattachment) GetDevice() *string {
+	return m.Device
+}
+
 //GetDisplayName returns DisplayName
 func (m volumeattachment) GetDisplayName() *string {
 	return m.DisplayName
@@ -153,6 +175,11 @@ func (m volumeattachment) GetIsReadOnly() *bool {
 	return m.IsReadOnly
 }
 
+//GetIsPvEncryptionInTransitEnabled returns IsPvEncryptionInTransitEnabled
+func (m volumeattachment) GetIsPvEncryptionInTransitEnabled() *bool {
+	return m.IsPvEncryptionInTransitEnabled
+}
+
 func (m volumeattachment) String() string {
 	return common.PointerString(m)
 }
@@ -160,7 +187,7 @@ func (m volumeattachment) String() string {
 // VolumeAttachmentLifecycleStateEnum Enum with underlying type: string
 type VolumeAttachmentLifecycleStateEnum string
 
-// Set of constants representing the allowable values for VolumeAttachmentLifecycleState
+// Set of constants representing the allowable values for VolumeAttachmentLifecycleStateEnum
 const (
 	VolumeAttachmentLifecycleStateAttaching VolumeAttachmentLifecycleStateEnum = "ATTACHING"
 	VolumeAttachmentLifecycleStateAttached  VolumeAttachmentLifecycleStateEnum = "ATTACHED"
@@ -175,7 +202,7 @@ var mappingVolumeAttachmentLifecycleState = map[string]VolumeAttachmentLifecycle
 	"DETACHED":  VolumeAttachmentLifecycleStateDetached,
 }
 
-// GetVolumeAttachmentLifecycleStateEnumValues Enumerates the set of values for VolumeAttachmentLifecycleState
+// GetVolumeAttachmentLifecycleStateEnumValues Enumerates the set of values for VolumeAttachmentLifecycleStateEnum
 func GetVolumeAttachmentLifecycleStateEnumValues() []VolumeAttachmentLifecycleStateEnum {
 	values := make([]VolumeAttachmentLifecycleStateEnum, 0)
 	for _, v := range mappingVolumeAttachmentLifecycleState {

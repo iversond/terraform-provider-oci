@@ -7,9 +7,9 @@ description: |-
 ---
 
 # Data Source: oci_objectstorage_object_head
-The `oci_objectstorage_object_head` data source allows access to the list of OCI object metadata
+This data source provides details about metadata of a specific Object resource in Oracle Cloud Infrastructure Object Storage service.
 
-Provides a datasource for fetching object metadata.
+Gets the metadata of an object.
 
 ## Example Usage
 
@@ -36,6 +36,7 @@ The following arguments are supported:
 The following attributes are exported:
  
 * `metadata` - The metadata of the object
-* `content-type` - The content-type of the object
-* `content-length` - The content-length of the object
+* `content_type` - The content-type of the object
+* `content_length` - The content-length of the object
+* `etag` - The etag of the object
 

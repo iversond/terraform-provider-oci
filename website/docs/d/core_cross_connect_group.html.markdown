@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_core_cross_connect_group"
+page_title: "Oracle Cloud Infrastructure: oci_core_cross_connect_group"
 sidebar_current: "docs-oci-datasource-core-cross_connect_group"
 description: |-
-  Provides details about a specific CrossConnectGroup
+  Provides details about a specific Cross Connect Group in Oracle Cloud Infrastructure Core service
 ---
 
 # Data Source: oci_core_cross_connect_group
-The `oci_core_cross_connect_group` data source provides details about a specific CrossConnectGroup
+This data source provides details about a specific Cross Connect Group resource in Oracle Cloud Infrastructure Core service.
 
 Gets the specified cross-connect group's information.
 
@@ -16,7 +16,7 @@ Gets the specified cross-connect group's information.
 ```hcl
 data "oci_core_cross_connect_group" "test_cross_connect_group" {
 	#Required
-	cross_connect_group_id = "${var.cross_connect_group_cross_connect_group_id}"
+	cross_connect_group_id = "${oci_core_cross_connect_group.test_cross_connect_group.id}"
 }
 ```
 
@@ -32,6 +32,7 @@ The following arguments are supported:
 The following attributes are exported:
 
 * `compartment_id` - The OCID of the compartment containing the cross-connect group.
+* `customer_reference_name` - A reference name or identifier for the physical fiber connection that this cross-connect group uses. 
 * `display_name` - The display name of A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information. 
 * `id` - The cross-connect group's Oracle ID (OCID).
 * `state` - The cross-connect group's current state.

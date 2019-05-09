@@ -53,12 +53,12 @@ them out to stdout
 
 More examples can be found in the SDK Github repo: https://github.com/oracle/oci-go-sdk/tree/master/example
 
-Optional fields in the SDK
+Optional Fields in the SDK
 
 Optional fields are represented with the `mandatory:"false"` tag on input structs. The SDK will omit all optional fields that are nil when making requests.
 In the case of enum-type fields, the SDK will omit fields whose value is an empty string.
 
-Helper functions
+Helper Functions
 
 The SDK uses pointers for primitive types in many input structs. To aid in the construction of such structs, the SDK provides
 functions that return a pointer for a given value. For example:
@@ -83,7 +83,7 @@ functions that return a pointer for a given value. For example:
 	}
 
 
-Signing custom requests
+Signing Custom Requests
 
 The SDK exposes a stand-alone signer that can be used to signing custom requests. Related code can be found here:
 https://github.com/oracle/oci-go-sdk/blob/master/common/http_signer.go.
@@ -143,11 +143,41 @@ The signer also allows more granular control on the headers used for signing. Fo
 	// Execute the request
 	c.Do(request)
 
-For more information on the signing algorithm refer to: https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/signingrequests.htm
+You can combine a custom signer with the exposed clients in the SDK.
+This allows you to add custom signed headers to the request. Following is an example:
 
-Polymorphic json requests and responses
+	//Create a provider of cryptographic keys
+	provider := common.DefaultConfigProvider()
 
-Some operations accept or return polymorphic json objects. The SDK models such objects as interfaces. Further the SDK provides
+	//Create a client for the service you interested in
+	c, _ := identity.NewIdentityClientWithConfigurationProvider(provider)
+
+	//Define a custom header to be signed, and add it to the list of default headers
+	customHeader := "opc-my-token"
+	allHeaders := append(common.DefaultGenericHeaders(), customHeader)
+
+	//Overwrite the signer in your client to sign the new slice of headers
+	c.Signer = common.RequestSigner(provider, allHeaders, common.DefaultBodyHeaders())
+
+	//Set the value of the header. This can be done with an Interceptor
+	c.Interceptor = func(request *http.Request) error {
+		request.Header.Add(customHeader, "customvalue")
+		return nil
+	}
+
+	//Execute your operation as before
+	c.ListGroups(..)
+
+Bear in mind that some services have a white list of headers that it expects to be signed.
+Therefore, adding an arbitrary header can result in authentications errors.
+To see a runnable example, see https://github.com/oracle/oci-go-sdk/blob/master/example/example_identity_test.go
+
+
+For more information on the signing algorithm refer to: https://docs.cloud.oracle.com/Content/API/Concepts/signingrequests.htm
+
+Polymorphic JSON Requests and Responses
+
+Some operations accept or return polymorphic JSON objects. The SDK models such objects as interfaces. Further the SDK provides
 structs that implement such interfaces. Thus, for all operations that expect interfaces as input, pass the struct in the SDK that satisfies
 such interface. For example:
 
@@ -178,7 +208,7 @@ In the case of a polymorphic response you can type assert the interface to the e
 
 	provider := response.IdentityProvider.(identity.Saml2IdentityProvider)
 
-An example of polymorphic json request handling can be found here: https://github.com/oracle/oci-go-sdk/blob/master/example/example_core_test.go#L63
+An example of polymorphic JSON request handling can be found here: https://github.com/oracle/oci-go-sdk/blob/master/example/example_core_test.go#L63
 
 
 Pagination
@@ -192,7 +222,15 @@ Logging and Debugging
 The SDK has a built-in logging mechanism used internally. The internal logging logic is used to record the raw http
 requests, responses and potential errors when (un)marshalling request and responses.
 
-To expose debugging logs, set the environment variable "OCI_GO_SDK_DEBUG" to "1", or some other non empty string.
+Built-in logging in the SDK is controlled via the environment variable "OCI_GO_SDK_DEBUG" and its contents. The below are possible values for the "OCI_GO_SDK_DEBUG" variable
+1. "info" or "i" enables all info logging messages
+2. "debug" or "d"  enables all debug and info logging messages
+3. "verbose" or "v" or "1" enables all verbose, debug and info logging messages
+4. "null" turns all logging messages off.
+
+If the value of the environment variable does not match any of the above then default logging level is "info".
+If the environment variable is not present then no logging messages are emitted.
+
 
 Retry
 
@@ -201,7 +239,7 @@ An example of this would be launching an instance and then waiting for the insta
 You might also want to retry the same operation again if there's network issue etc...
 This can be accomplished by using the RequestMetadata.RetryPolicy. You can find the examples here: https://github.com/oracle/oci-go-sdk/blob/master/example/example_retry_test.go
 
-Using the SDK with a proxy server
+Using the SDK with a Proxy Server
 
 The GO SDK uses the net/http package to make calls to OCI services. If your environment requires you to use a proxy server for outgoing HTTP requests
 then you can set this up in the following ways:
@@ -230,8 +268,29 @@ Some response fields are enum-typed. In the future, individual services may retu
 for that field. To address this possibility, every enum-type response field is a modeled as a type that supports any string.
 Thus if a service returns a value that is not recognized by your version of the SDK, then the response field will be set to this value.
 
-When individual services return a polymorphic json response not available as a concrete struct, the SDK will return an implementation that only satisfies
-the interface modeling the polymorphic json response.
+When individual services return a polymorphic JSON response not available as a concrete struct, the SDK will return an implementation that only satisfies
+the interface modeling the polymorphic JSON response.
+
+
+New Region Support
+
+If you are using a version of the SDK released prior to the announcement of a new region, you may need to use a workaround to reach it, depending on whether the region is in the oraclecloud.com realm.
+
+A region is a localized geographic area. For more information on regions and how to identify them, see Regions and Availability Domains(https://docs.cloud.oracle.com/iaas/Content/General/Concepts/regions.htm).
+
+A realm is a set of regions that share entities. You can identify your realm by looking at the domain name at the end of the network address. For example, the realm for xyz.abc.123.oraclecloud.com is oraclecloud.com.
+
+oraclecloud.com Realm: For regions in the oraclecloud.com realm, even if common.Region does not contain the new region, the forward compatibility of the SDK can automatically handle it. You can pass new region names just as you would pass ones that are already defined. For more information on passing region names in the configuration, see Configuring (https://github.com/oracle/oci-go-sdk/blob/master/README.md#configuring). For details on common.Region, see (https://github.com/oracle/oci-go-sdk/blob/master/common/common.go).
+
+Other Realms: For regions in realms other than oraclecloud.com, you can use the following workarounds to reach new regions with earlier versions of the SDK.
+
+NOTE: Be sure to supply the appropriate endpoints for your region.
+
+You can overwrite the target host with client.Host:
+	client.Host = 'https://identity.us-gov-phoenix-1.oraclegovcloud.com'
+ 
+If you are authenticating via instance principals, you can set the authentication endpoint in an environment variable:
+	export OCI_SDK_AUTH_CLIENT_REGION_URL="https://identity.us-gov-phoenix-1.oraclegovcloud.com"
 
 
 Contributions

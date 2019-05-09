@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_database_db_node"
+page_title: "Oracle Cloud Infrastructure: oci_database_db_node"
 sidebar_current: "docs-oci-datasource-database-db_node"
 description: |-
-  Provides details about a specific DbNode
+  Provides details about a specific Db Node in Oracle Cloud Infrastructure Database service
 ---
 
 # Data Source: oci_database_db_node
-The `oci_database_db_node` data source provides details about a specific DbNode
+This data source provides details about a specific Db Node resource in Oracle Cloud Infrastructure Database service.
 
 Gets information about the specified database node.
 
@@ -16,7 +16,7 @@ Gets information about the specified database node.
 ```hcl
 data "oci_database_db_node" "test_db_node" {
 	#Required
-	db_node_id = "${var.db_node_db_node_id}"
+	db_node_id = "${var.db_node_id}"
 }
 ```
 
@@ -24,19 +24,20 @@ data "oci_database_db_node" "test_db_node" {
 
 The following arguments are supported:
 
-* `db_node_id` - (Required) The database node [OCID](https://docs.us-phoenix-1.oraclecloud.com/Content/General/Concepts/identifiers.htm).
+* `db_node_id` - (Required) The database node [OCID](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm).
 
 
 ## Attributes Reference
 
 The following attributes are exported:
 
-* `backup_vnic_id` - The OCID of the backup VNIC.
-* `db_system_id` - The OCID of the DB System.
-* `hostname` - The host name for the DB Node.
-* `id` - The OCID of the DB Node.
-* `software_storage_size_in_gb` - Storage size, in GBs, of the software volume that is allocated to the DB system. This is applicable only for VM-based DBs. 
+* `backup_vnic_id` - The [OCID](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm) of the backup VNIC.
+* `db_system_id` - The [OCID](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm) of the DB system.
+* `fault_domain` - The name of the Fault Domain the instance is contained in.
+* `hostname` - The host name for the database node.
+* `id` - The [OCID](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm) of the database node.
+* `software_storage_size_in_gb` - The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems. 
 * `state` - The current state of the database node.
-* `time_created` - The date and time that the DB Node was created.
-* `vnic_id` - The OCID of the VNIC.
+* `time_created` - The date and time that the database node was created.
+* `vnic_id` - The [OCID](https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm) of the VNIC.
 

@@ -37,7 +37,7 @@ func NewFileStorageClientWithConfigurationProvider(configProvider common.Configu
 
 // SetRegion overrides the region of this client.
 func (client *FileStorageClient) SetRegion(region string) {
-	client.Host = fmt.Sprintf(common.DefaultHostURLTemplate, "filestorage", region)
+	client.Host = common.StringToRegion(region).Endpoint("filestorage")
 }
 
 // SetConfigurationProvider sets the configuration provider including the region, returns an error if is not valid
@@ -66,6 +66,11 @@ func (client FileStorageClient) CreateExport(ctx context.Context, request Create
 	if request.RetryPolicy() != nil {
 		policy = *request.RetryPolicy()
 	}
+
+	if !(request.OpcRetryToken != nil && *request.OpcRetryToken != "") {
+		request.OpcRetryToken = common.String(common.RetryToken())
+	}
+
 	ociResponse, err = common.Retry(ctx, request, client.createExport, policy)
 	if err != nil {
 		if ociResponse != nil {
@@ -111,9 +116,9 @@ func (client FileStorageClient) createExport(ctx context.Context, request common
 // mount target's IP address. You can associate a file system with
 // more than one mount target at a time.
 // For information about access control and compartments, see
-// Overview of the IAM Service (https://docs.us-phoenix-1.oraclecloud.com/Content/Identity/Concepts/overview.htm).
+// Overview of the IAM Service (https://docs.cloud.oracle.com/Content/Identity/Concepts/overview.htm).
 // For information about availability domains, see Regions and
-// Availability Domains (https://docs.us-phoenix-1.oraclecloud.com/Content/General/Concepts/regions.htm).
+// Availability Domains (https://docs.cloud.oracle.com/Content/General/Concepts/regions.htm).
 // To get a list of availability domains, use the
 // `ListAvailabilityDomains` operation in the Identity and Access
 // Management Service API.
@@ -129,6 +134,11 @@ func (client FileStorageClient) CreateFileSystem(ctx context.Context, request Cr
 	if request.RetryPolicy() != nil {
 		policy = *request.RetryPolicy()
 	}
+
+	if !(request.OpcRetryToken != nil && *request.OpcRetryToken != "") {
+		request.OpcRetryToken = common.String(common.RetryToken())
+	}
+
 	ociResponse, err = common.Retry(ctx, request, client.createFileSystem, policy)
 	if err != nil {
 		if ociResponse != nil {
@@ -180,9 +190,9 @@ func (client FileStorageClient) createFileSystem(ctx context.Context, request co
 // Allow at least three IP addresses for each mount target.
 // For information about access control and compartments, see
 // Overview of the IAM
-// Service (https://docs.us-phoenix-1.oraclecloud.com/Content/Identity/Concepts/overview.htm).
+// Service (https://docs.cloud.oracle.com/Content/Identity/Concepts/overview.htm).
 // For information about availability domains, see Regions and
-// Availability Domains (https://docs.us-phoenix-1.oraclecloud.com/Content/General/Concepts/regions.htm).
+// Availability Domains (https://docs.cloud.oracle.com/Content/General/Concepts/regions.htm).
 // To get a list of availability domains, use the
 // `ListAvailabilityDomains` operation in the Identity and Access
 // Management Service API.
@@ -198,6 +208,11 @@ func (client FileStorageClient) CreateMountTarget(ctx context.Context, request C
 	if request.RetryPolicy() != nil {
 		policy = *request.RetryPolicy()
 	}
+
+	if !(request.OpcRetryToken != nil && *request.OpcRetryToken != "") {
+		request.OpcRetryToken = common.String(common.RetryToken())
+	}
+
 	ociResponse, err = common.Retry(ctx, request, client.createMountTarget, policy)
 	if err != nil {
 		if ociResponse != nil {
@@ -241,6 +256,11 @@ func (client FileStorageClient) CreateSnapshot(ctx context.Context, request Crea
 	if request.RetryPolicy() != nil {
 		policy = *request.RetryPolicy()
 	}
+
+	if !(request.OpcRetryToken != nil && *request.OpcRetryToken != "") {
+		request.OpcRetryToken = common.String(common.RetryToken())
+	}
+
 	ociResponse, err = common.Retry(ctx, request, client.createSnapshot, policy)
 	if err != nil {
 		if ociResponse != nil {
@@ -1026,6 +1046,48 @@ func (client FileStorageClient) updateMountTarget(ctx context.Context, request c
 	}
 
 	var response UpdateMountTargetResponse
+	var httpResponse *http.Response
+	httpResponse, err = client.Call(ctx, &httpRequest)
+	defer common.CloseBodyIfValid(httpResponse)
+	response.RawResponse = httpResponse
+	if err != nil {
+		return response, err
+	}
+
+	err = common.UnmarshalResponse(httpResponse, &response)
+	return response, err
+}
+
+// UpdateSnapshot Updates the specified snapshot's information.
+func (client FileStorageClient) UpdateSnapshot(ctx context.Context, request UpdateSnapshotRequest) (response UpdateSnapshotResponse, err error) {
+	var ociResponse common.OCIResponse
+	policy := common.NoRetryPolicy()
+	if request.RetryPolicy() != nil {
+		policy = *request.RetryPolicy()
+	}
+	ociResponse, err = common.Retry(ctx, request, client.updateSnapshot, policy)
+	if err != nil {
+		if ociResponse != nil {
+			response = UpdateSnapshotResponse{RawResponse: ociResponse.HTTPResponse()}
+		}
+		return
+	}
+	if convertedResponse, ok := ociResponse.(UpdateSnapshotResponse); ok {
+		response = convertedResponse
+	} else {
+		err = fmt.Errorf("failed to convert OCIResponse into UpdateSnapshotResponse")
+	}
+	return
+}
+
+// updateSnapshot implements the OCIOperation interface (enables retrying operations)
+func (client FileStorageClient) updateSnapshot(ctx context.Context, request common.OCIRequest) (common.OCIResponse, error) {
+	httpRequest, err := request.HTTPRequest(http.MethodPut, "/snapshots/{snapshotId}")
+	if err != nil {
+		return nil, err
+	}
+
+	var response UpdateSnapshotResponse
 	var httpResponse *http.Response
 	httpResponse, err = client.Call(ctx, &httpRequest)
 	defer common.CloseBodyIfValid(httpResponse)

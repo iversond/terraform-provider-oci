@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_core_cross_connect_groups"
+page_title: "Oracle Cloud Infrastructure: oci_core_cross_connect_groups"
 sidebar_current: "docs-oci-datasource-core-cross_connect_groups"
 description: |-
-  Provides a list of CrossConnectGroups
+  Provides the list of Cross Connect Groups in Oracle Cloud Infrastructure Core service
 ---
 
 # Data Source: oci_core_cross_connect_groups
-The `oci_core_cross_connect_groups` data source allows access to the list of OCI cross_connect_groups
+This data source provides the list of Cross Connect Groups in Oracle Cloud Infrastructure Core service.
 
 Lists the cross-connect groups in the specified compartment.
 
@@ -45,6 +45,7 @@ The following attributes are exported:
 The following attributes are exported:
 
 * `compartment_id` - The OCID of the compartment containing the cross-connect group.
+* `customer_reference_name` - A reference name or identifier for the physical fiber connection that this cross-connect group uses. 
 * `display_name` - The display name of A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information. 
 * `id` - The cross-connect group's Oracle ID (OCID).
 * `state` - The cross-connect group's current state.

@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_identity_api_keys"
+page_title: "Oracle Cloud Infrastructure: oci_identity_api_keys"
 sidebar_current: "docs-oci-datasource-identity-api_keys"
 description: |-
-  Provides a list of ApiKeys
+  Provides the list of Api Keys in Oracle Cloud Infrastructure Identity service
 ---
 
 # Data Source: oci_identity_api_keys
-The `oci_identity_api_keys` data source allows access to the list of OCI api_keys
+This data source provides the list of Api Keys in Oracle Cloud Infrastructure Identity service.
 
 Lists the API signing keys for the specified user. A user can have a maximum of three keys.
 
@@ -45,7 +45,7 @@ The following attributes are exported:
 * `id` - An Oracle-assigned identifier for the key, in this format: TENANCY_OCID/USER_OCID/KEY_FINGERPRINT. 
 * `inactive_status` - The detailed status of INACTIVE lifecycleState.
 * `key_value` - The key's value.
-* `state` - The API key's current state. After creating an `ApiKey` object, make sure its `lifecycleState` changes from CREATING to ACTIVE before using it. 
+* `state` - The API key's current state.
 * `time_created` - Date and time the `ApiKey` object was created, in the format defined by RFC3339.  Example: `2016-08-25T21:10:29.600Z` 
 * `user_id` - The OCID of the user the key belongs to.
 

@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_core_shapes"
+page_title: "Oracle Cloud Infrastructure: oci_core_shapes"
 sidebar_current: "docs-oci-datasource-core-shapes"
 description: |-
-  Provides a list of Shapes
+  Provides the list of Shapes in Oracle Cloud Infrastructure Core service
 ---
 
 # Data Source: oci_core_shapes
-The `oci_core_shapes` data source allows access to the list of OCI shapes
+This data source provides the list of Shapes in Oracle Cloud Infrastructure Core service.
 
 Lists the shapes that can be used to launch an instance within the specified compartment. You can
 filter the list by compatibility with a specific image.
@@ -30,7 +30,7 @@ data "oci_core_shapes" "test_shapes" {
 
 The following arguments are supported:
 
-* `availability_domain` - (Optional) The name of the Availability Domain.  Example: `Uocm:PHX-AD-1` 
+* `availability_domain` - (Optional) The name of the availability domain.  Example: `Uocm:PHX-AD-1` 
 * `compartment_id` - (Required) The OCID of the compartment.
 * `image_id` - (Optional) The OCID of an image.
 
@@ -45,5 +45,5 @@ The following attributes are exported:
 
 The following attributes are exported:
 
-* `name` - The name of the shape. You can enumerate all available shapes by calling [ListShapes](https://docs.us-phoenix-1.oraclecloud.com/api/#/en/iaas/20160918/Shape/ListShapes). 
+* `name` - The name of the shape. You can enumerate all available shapes by calling [ListShapes](https://docs.cloud.oracle.com/iaas/api/#/en/iaas/20160918/Shape/ListShapes). 
 

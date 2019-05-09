@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_identity_idp_group_mappings"
+page_title: "Oracle Cloud Infrastructure: oci_identity_idp_group_mappings"
 sidebar_current: "docs-oci-datasource-identity-idp_group_mappings"
 description: |-
-  Provides a list of IdpGroupMappings
+  Provides the list of Idp Group Mappings in Oracle Cloud Infrastructure Identity service
 ---
 
 # Data Source: oci_identity_idp_group_mappings
-The `oci_identity_idp_group_mappings` data source allows access to the list of OCI idp_group_mappings
+This data source provides the list of Idp Group Mappings in Oracle Cloud Infrastructure Identity service.
 
 Lists the group mappings for the specified identity provider.
 
@@ -44,6 +44,6 @@ The following attributes are exported:
 * `identity_provider_id` - The OCID of the `IdentityProvider` this mapping belongs to.
 * `idp_group_name` - The name of the IdP group that is mapped to the IAM Service group.
 * `inactive_state` - The detailed status of INACTIVE lifecycleState.
-* `state` - The mapping's current state.  After creating a mapping object, make sure its `lifecycleState` changes from CREATING to ACTIVE before using it. 
+* `state` - The mapping's current state.
 * `time_created` - Date and time the mapping was created, in the format defined by RFC3339.  Example: `2016-08-25T21:10:29.600Z` 
 

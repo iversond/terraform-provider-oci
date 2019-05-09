@@ -1,13 +1,13 @@
 ---
 layout: "oci"
-page_title: "OCI: oci_core_fast_connect_provider_services"
+page_title: "Oracle Cloud Infrastructure: oci_core_fast_connect_provider_services"
 sidebar_current: "docs-oci-datasource-core-fast_connect_provider_services"
 description: |-
-  Provides a list of FastConnectProviderServices
+  Provides the list of Fast Connect Provider Services in Oracle Cloud Infrastructure Core service
 ---
 
 # Data Source: oci_core_fast_connect_provider_services
-The `oci_core_fast_connect_provider_services` data source allows access to the list of OCI fast_connect_provider_services
+This data source provides the list of Fast Connect Provider Services in Oracle Cloud Infrastructure Core service.
 
 Lists the service offerings from supported providers. You need this
 information so you can specify your desired provider and service
@@ -15,7 +15,7 @@ offering when you create a virtual circuit.
 
 For the compartment ID, provide the OCID of your tenancy (the root compartment).
 
-For more information, see [FastConnect Overview](https://docs.us-phoenix-1.oraclecloud.com/Content/Network/Concepts/fastconnect.htm).
+For more information, see [FastConnect Overview](https://docs.cloud.oracle.com/iaas/Content/Network/Concepts/fastconnect.htm).
 
 
 ## Example Usage
@@ -44,12 +44,16 @@ The following attributes are exported:
 
 The following attributes are exported:
 
+* `bandwith_shape_management` - Who is responsible for managing the virtual circuit bandwidth. 
+* `customer_asn_management` - Who is responsible for managing the ASN information for the network at the other end of the connection from Oracle. 
 * `description` - A description of the service offered by the provider. 
 * `id` - The OCID of the service offered by the provider. 
-* `private_peering_bgp_management` - Private peering BGP management. 
+* `private_peering_bgp_management` - Who is responsible for managing the private peering BGP information. 
 * `provider_name` - The name of the provider. 
+* `provider_service_key_management` - Who is responsible for managing the provider service key. 
 * `provider_service_name` - The name of the service offered by the provider. 
-* `public_peering_bgp_management` - Public peering BGP management. 
+* `public_peering_bgp_management` - Who is responsible for managing the public peering BGP information. 
+* `required_total_cross_connects` - Total number of cross-connect or cross-connect groups required for the virtual circuit. 
 * `supported_virtual_circuit_types` - An array of virtual circuit types supported by this service. 
 * `type` - Provider service type. 
 

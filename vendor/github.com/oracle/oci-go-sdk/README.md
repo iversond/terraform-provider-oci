@@ -27,6 +27,8 @@ To start working with the Go SDK, you import the service package, create a clien
 ### Configuring 
 Before using the SDK, set up a config file with the required credentials. See [SDK and Tool Configuration](https://docs.us-phoenix-1.oraclecloud.com/Content/API/Concepts/sdkconfig.htm) for instructions.
 
+Note that the Go SDK does not support profile inheritance or defining custom values in the configuration file.
+
 Once a config file has been setup, call `common.DefaultConfigProvider()` function as follows:
 
  ```go
@@ -53,8 +55,8 @@ type ConfigurationProvider interface {
 }
 ```
 
-### Making a request
-To make a request to an OCI service, create a client for the service and then use the client to call a function from the service.
+### Making a Request
+To make a request to an Oracle Cloud Infrastructure service, create a client for the service and then use the client to call a function from the service.
 
 - *Creating a client*: All packages provide a function to create clients, using the naming convention `New<ServiceName>ClientWithConfigurationProvider`,
 such as `NewVirtualNetworkClientWithConfigurationProvider` or `NewIdentityClientWithConfigurationProvider`. To create a new client, 
@@ -130,8 +132,8 @@ See [CHANGELOG](/CHANGELOG.md).
 ## Known Issues
 You can find information on any known issues with the SDK here and under the [Issues](https://github.com/oracle/oci-go-sdk/issues) tab of this project's GitHub repository.
 
-## Building and testing
-### Dev dependencies
+## Building and Testing
+### Dev Dependencies
 - Install [Testify](https://github.com/stretchr/testify) with the command:
 ```sh
 go get github.com/stretchr/testify

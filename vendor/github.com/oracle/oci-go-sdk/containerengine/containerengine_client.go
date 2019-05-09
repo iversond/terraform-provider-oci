@@ -3,7 +3,9 @@
 
 // Container Engine for Kubernetes API
 //
-// Container Engine for Kubernetes API
+// API for the Container Engine for Kubernetes service. Use this API to build, deploy,
+// and manage cloud-native applications. For more information, see
+// Overview of Container Engine for Kubernetes (https://docs.cloud.oracle.com/iaas/Content/ContEng/Concepts/contengoverview.htm).
 //
 
 package containerengine
@@ -37,7 +39,7 @@ func NewContainerEngineClientWithConfigurationProvider(configProvider common.Con
 
 // SetRegion overrides the region of this client.
 func (client *ContainerEngineClient) SetRegion(region string) {
-	client.Host = fmt.Sprintf(common.DefaultHostURLTemplate, "containerengine", region)
+	client.Host = common.StringToRegion(region).EndpointForTemplate("containerengine", "https://containerengine.{region}.{secondLevelDomain}")
 }
 
 // SetConfigurationProvider sets the configuration provider including the region, returns an error if is not valid
@@ -65,6 +67,11 @@ func (client ContainerEngineClient) CreateCluster(ctx context.Context, request C
 	if request.RetryPolicy() != nil {
 		policy = *request.RetryPolicy()
 	}
+
+	if !(request.OpcRetryToken != nil && *request.OpcRetryToken != "") {
+		request.OpcRetryToken = common.String(common.RetryToken())
+	}
+
 	ociResponse, err = common.Retry(ctx, request, client.createCluster, policy)
 	if err != nil {
 		if ociResponse != nil {
@@ -148,6 +155,11 @@ func (client ContainerEngineClient) CreateNodePool(ctx context.Context, request 
 	if request.RetryPolicy() != nil {
 		policy = *request.RetryPolicy()
 	}
+
+	if !(request.OpcRetryToken != nil && *request.OpcRetryToken != "") {
+		request.OpcRetryToken = common.String(common.RetryToken())
+	}
+
 	ociResponse, err = common.Retry(ctx, request, client.createNodePool, policy)
 	if err != nil {
 		if ociResponse != nil {

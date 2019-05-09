@@ -1,7 +1,317 @@
-# Change Log
-All notable changes to this project are documented in this file.
+## 3.24.2 (Unreleased)
+## 3.24.1 (May 07, 2019)
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/).
+### Fixed
+- Fix unhandled error when Security Lists are altered outside Terraform
+- Updated `availability_domain` property to be case insensitive
+
+## 3.24.0 (April 24, 2019)
+
+### Added
+- Support data source for cost tracking tags
+- Singular data sources will reuse resource schema
+
+## 3.23.0 (April 17, 2019)
+
+### Added
+- Support for updating `license_model` for `oci_autonomous_database` resource
+- Support for updating `static_routes` and new `cpe_local_identifier` in `oci_core_ipsec` resource for improved VPN service usability
+- Support for updating `whitelisted_ips` in `autonomous_database`. Note: Cannot be used during creation.
+- Support tagging for Dynamic Groups in Identity 
+
+## 3.22.0 (April 10, 2019)
+
+### Added
+- Support for `compartment_id` filter in `email_senders` and `email_suppressions` data sources
+- Support for import in dbHomes and dbSystems
+
+### Fixed
+- Backward compatibility for compositeId in Object Storage - Objects and PARs
+
+## 3.21.0 (April 03, 2019)
+
+### Added
+- Support for additional dbHomes/databases in a BM Db System
+- Support for tags in databases
+- Support for updates to database auto_backup_enabled
+- Support for provider service keys in Fast Connect Provider Services
+- Singular data sources for User, Group, File Storage Snapshot, Private IP and Virtual Cloud Network (VCN).
+- Support for authentication policy introduced in v3.18.0 is now generally available.
+
+### Fixed
+- Virtual Circuit update failures by handling default values
+- Importing `assign_public_ip` for Core vnic attachment
+
+## 3.20.0 (March 27, 2019)
+
+### Added
+- Support for importing Buckets and Pre-authenticated requests in Object Storage
+- Support glob inclusion and exclusion patterns for object names allowed in Object Storage Lifecycle
+- Support for sorting for resources returned in `oci_core_images` data source
+- Support for Web Application Acceleration and Security service
+
+### Fixed
+- Import functionality for Objects in Object Storage
+- Import functionality for Identity Policy
+
+## 3.19.0 (March 20, 2019)
+
+### Added
+- Support for cloning of Autonomous Databases
+- Support for node metadata in container engine node pool
+- Support for Data Guard Associations for databases
+
+## 3.18.0 (March 13, 2019)
+
+### Added
+- Add Budget and Alert Rules resources
+- Support starting and stopping instances
+- Support to create Containerengine Node Pool with Image Id
+- Support for customer specified timezone in Database Systems
+- Support for creating Autonomous Data Warehouses through Autonomous Database resource `oci_database_autonomous_database` using the field `db_workload`
+- Support for Defined Tag defaults through the `oci_identity_tag_default` resource
+- Support for updating the compartment on a Tag Namespace
+- Support for exadata io resource management config for DB system
+- Support `email` attribute for `oci_identity_user` resource
+- Support for authentication policy
+
+### Fixed
+- Marked oci_identity_ui_password resource as not importable
+
+### Deprecated
+- Deprecated Autonomous Data Warehouse resources `oci_database_autonomous_data_warehouse`, the API is now unified with Autonomous Database
+
+## 3.17.0 (March 05, 2019)
+
+### Added
+- Add singular Availability Domain data source with related example updates
+- Support for Monitoring service
+- Adding ability to disable monitoring in instances
+- Adding support for Metrics-based Dynamic Auto-scaling
+- Support for listing and specifying Fault Domains in Database resources
+- Support for Notification service
+
+## 3.16.0 (February 26, 2019)
+
+### Added
+- Adding description property to rules in Steering Policies in DNS
+- Enable regional Subnets by making Availability Domain optional when creating a Subnet
+- Support for Streaming service
+- Support for the tagging of applicable KMS resources
+
+### Fixed
+- DNS Record now requires domain and rtype as mandatory arguments. Managing DNS record resources now requires DNS_RECORD* level policy entitlements instead of DNS_ZONE*. [Permissions List](https://docs.cloud.oracle.com/iaas/Content/Identity/Reference/dnspolicyreference.htm)
+
+## 3.15.0 (February 12, 2019)
+
+### Added
+- Adding support for the tagging of Email Delivery service approved senders
+- Support for Health Check Service
+- Adding database connection information to the `oci_database_database` and `oci_database_databases` data sources
+- Adding support for Steering Policies in DNS
+
+## 3.14.1 (February 05, 2019)
+
+### Fixed
+- Timeout should be updatable for the `oci_containerengine_cluster` and `oci_containerengine_node_pool` resources
+- Virtual Circuit `public_prefixes` to be updatable and importable. [Issue #700](https://github.com/terraform-providers/terraform-provider-oci/issues/700)
+
+## 3.14.0 (January 29, 2019)
+
+### Added
+- Adding support for the database renaming during restore from incremental backup
+
+## 3.13.0 (January 23, 2019)
+
+### Added
+- Added singular data source for Object Storage objects
+
+### Fixed
+- Fixed an issue where the default retry timeout is zero seconds if `retry_duration_seconds` isn't specified
+- Modifying immutable `metadata` fields such as `ssh_authorized_keys` and `user_data` should result in new instances. [Issue #673](https://github.com/terraform-providers/terraform-provider-oci/issues/673)
+- Vendored Terraform helper/schema SDK to return matching data type for maps in case of empty state. [Issue #685](https://github.com/terraform-providers/terraform-provider-oci/issues/685)
+
+## 3.12.0 (January 15, 2019)
+
+### Added
+- Support for `retry_duration_seconds` option to configure length of retry in the face of HTTP 429 and 500 errors
+- Support for custom header insertion, extension, and removal for Load Balancer listener resource
+- Support for consistent volume names in the Block Volume attachments
+
+### Fixed
+- Retried SDK calls are now jittered to avoid herding of retry requests in high parallelism scenarios
+- Fail the initialization of the provider if either of `user_ocid`, `fingerprint`, `private_key`, `private_key_path` or `private_key_password` are specified for `InstancePrincipal` or `InstancePrincipalWithCerts` auth mode.
+
+### Note
+- Examples and test updated to use VM.Standard2.1
+- Windows example image updated to Windows-Server-2012-R2-Standard-Edition-VM-Gen2-2018.12.12-0
+
+## 3.11.2 (January 10, 2019)
+
+### Fixed
+- Reverted previous fix for immutable `metadata` fields `ssh_authorized_keys` and `user_data` that results in new instances due to a crash when using interpolations in TypeMap with customdiff (Issue #685)
+
+## 3.11.1 (January 08, 2019)
+
+### Changed
+- LoadBalancer BackendSets to have TypeSet for Backends to avoid out of order diffs
+
+### Fixed
+- Regression in handling of failed work-requests to pass the errors to the user and fail the apply
+- Removing certificates from load balancer listeners can be done by omitting `ssl_configuration`
+- Load balancer resources that are stuck in failed state during deletion can now be deleted after upgrading
+- Modifying immutable `metadata` fields such as `ssh_authorized_keys` and `user_data` should result in new instances
+
+## 3.11.0 (December 18, 2018)
+
+### Added
+- Support for tagging in `oci_dns_zone`
+- New attribute `nameservers` is added to `oci_dns_zone`
+- Support for in-transit encryption for paravirtualized boot and data attachment
+- Identify latest database version with `oci_databse_db_versions` data source using `is_latest_for_major_version` property
+- Support for importing tag. Note tag uses custom Id(import only) format (tagNamespaces/{tagNamespaceId}/tags/{tagName}) to support import.
+- Support for provisioning user capabilities for native and federation shadow users
+- Support `id` attribute for `oci_identity_availability_domains`
+- Support `freeform_attributes` attribute for the `oci_identity_identity_provider`
+- Support for `sparse_diskgroup` for Exadata dbsystem
+
+## 3.10.0 (December 11, 2018)
+
+### Added
+- Support for attaching Route Table to Subnet. Issue [#270](https://github.com/terraform-providers/terraform-provider-oci/issues/270)
+
+## 3.9.0 (December 04, 2018)
+
+### Added
+- Support for the Instance Pools & Instance Configurations
+- Support for the Block Volume cross-region backups
+- Support for 'approximate_count' and 'approximate_size' for bucket resource
+
+## 3.8.0 (November 28, 2018)
+
+### Added
+- Support VCN Transit
+
+## 3.7.0 (November 14, 2018)
+
+### Added
+- New parameter `is_hydrated` in `oci_core_volume_groups` resource and data source
+- Support for public IP prefixes (CIDRs) up to 31
+- Support for tagging in `oci_file_storage_file_system`, `oci_file_storage_mount_target`, and `oci_file_storage_snapshot`
+
+### Changed
+- Make `route_table_id`, `dhcp_options_id` in `oci_core_subnet` updatable
+- Make `security_list_ids` in `oci_core_subnet` optional and updatable
+
+### Deprecated
+- Volumes: The `backup_policy_id` attribute is now deprecated. Backup policy should be assigned through `volume_backup_policy_assignments` resource instead.
+- BootVolumes: The `backup_policy_id` attribute is now deprecated. Backup policy should be assigned through `volume_backup_policy_assignments` resource instead.
+
+## 3.6.0 (November 01, 2018)
+
+### Added
+- New parameters `db_name` and `state` in `oci_database_database` data source
+- New parameters `display_name` and `state` in `oci_database_db_homes` data source
+- New parameter `state` parameter in `oci_database_db_nodes` data source
+- New parameters `availability_domain`, `display_name`, and `state` in `oci_database_db_systems` data source
+- Support for Partner Image Catalog
+- Support for Key Management Service
+- Support for encrypting the contents of an Object Storage bucket using a Key Management Service key
+- Support for specifying a Key Management Service key when launching a compute instance in the Compute service
+- Support for specifying a Key Management Service key when backing up or restoring a block storage volume in the Block Volume service
+- Support enabling cost tracking for tags using `is_cost_tracking` field
+- Support returning maintenance reboot time for compute instances using `time_maintenance_reboot_due` field
+- Support nesting and deleting compartments. Compartment delete requires opt in, see compartment documentation
+
+### Fixed
+- Data type for properties with type as TypeSet to TypeList in following datasources: `oci_core_route_tables`, `oci_core_security_lists`, `oci_core_volume`, and `oci_core_service_gateways` to allow referencing by indexes in Terraform configs.
+
+## 3.5.0 (October 19, 2018)
+
+### Added
+- Support for [Cross Region Copy](https://docs.cloud.oracle.com/iaas/Content/Object/Tasks/copyingobjects.htm) of objects
+- Support for object lifecycle policies on a bucket on object storage. See [Using Object Lifecycle Management](https://docs.cloud.oracle.com/iaas/Content/Object/Tasks/usinglifecyclepolicies.htm)
+- Support for singular data source for a bucket
+- Additional nested field in `oci_database_backups` data source and `oci_database_backup` resource, under the `backups` property called `database_size_in_gbs`
+- Support for generating and downloading wallets for Autonomous Database and Autonomous Data Warehouse. See [Connecting to Autonomous Data Warehouse](https://docs.cloud.oracle.com/iaas/Content/Database/Tasks/adwconnecting.htm) for more details.
+
+### Changed
+- Nested field in `oci_database_backups` data source and `oci_database_backup` resource, under the `backups` property called `db_data_size_in_mbs` marked as deprecated
+
+## 3.4.0 (October 11, 2018)
+
+### Added
+- Support for clone and resize of Boot Volume
+- Support for specifying a backup policy at the time of creating a Boot Volume
+- Support for offline resizing of Boot Volume
+- Support for tagging of Boot Volume
+- Support for NAT Gateways
+- Support for singular data sources that can query individual Volumes, Subnets, and Instances
+- Fields "assigned_entity_id" and "assigned_entity_type" to Public IPs to allow distinguishing Public IPs of the NAT Gateway.
+
+### Fixed
+- Importing of volumes with backup policies. Issue [#590](https://github.com/terraform-providers/terraform-provider-oci/issues/590)
+- Updating of Virtual Circuits fails with field bgpMd5AuthKey is not supported
+
+## 3.3.0 (October 04, 2018)
+
+### Added
+- Support for new Image launch mode: paravirtualization
+
+### Fixed
+- Fix logic to prevent unexpected diffs related to numbers. Issue [#607](https://github.com/terraform-providers/terraform-provider-oci/issues/607)
+
+## 3.2.0 (September 28, 2018)
+
+### Added
+- Support updating size of offline volumes
+
+### Fixed
+- Specifying lifecycle state in container engine cluster datasource properly filters. Issue [#600](https://github.com/terraform-providers/terraform-provider-oci/issues/600)
+- Importing the assign_public_ip attribute for instances has the correct default. Issue [#593](https://github.com/terraform-providers/terraform-provider-oci/issues/593)
+- ADW and ATP resources destruction still succeeds if the database lifecycle state becomes `Unavailable`
+
+## 3.1.1 (September 21, 2018)
+
+### Fixed
+- Fixed bug with load balancer compositeId. Issue [#612](https://github.com/oracle/terraform-provider-oci/issues/612)
+
+## 3.1.0 (September 20, 2018)
+
+### Added
+- Support for importing load balancer related resources such as backend, backend set, hostname, listeners, and path route sets
+- Support for updating an instance's metadata and extended metadata
+
+## 3.0.0 (September 17, 2018)
+
+### Fixed
+- Fixed bug with DNS Records when the user specified more than 50 records in a terraform config. Issue [#581](https://github.com/oracle/terraform-provider-oci/issues/581)
+
+### Notes
+- This is the first provider version that can be automatically downloaded and installed with the `terraform init` command.
+
+## 2.2.4 - 2018-09-11
+
+### Added
+- Support for Autonomous Data Warehouse and manual backups
+- Support for Autonomous Transaction Processing (a.k.a Autonomous Database) and manual backups
+
+## 2.2.3 - 2018-09-06
+
+### Added
+- Support for specifying a backup policy at the time of creating a Volume
+
+## 2.2.2 - 2018-08-30
+
+### Added
+- Support for listing Fault Domains in an AD and specifying them when launching an Instance
+
+
+## 2.2.1 - 2018-08-23
+
+### Added
+- Support for Boot Volume Backups. See [Boot Volume Backup Resources](https://github.com/oracle/terraform-provider-oci/blob/master/docs/core/boot_volume_backups.md) and [Backing Up a Boot Volume](https://docs.cloud.oracle.com/iaas/Content/Block/Tasks/backingupabootvolume.htm)
+- Support for efficient large file uploads in Object Storage using multi-part API by providing `source` path. See [Object Resources](https://github.com/oracle/terraform-provider-oci/blob/master/docs/object_storage/objects.md) and [Using Multipart Uploads](https://docs.cloud.oracle.com/iaas/Content/Object/Tasks/usingmultipartuploads.htm)
 
 ## 2.2.0 - 2018-08-09
 
@@ -44,13 +354,13 @@ _This build contains a known issue where updates to a Route Table's Route Rules 
 - Adding Service Gateway resource and data source, update Route Table and Security List
 - Add Audit service configuration resource
 - Support Identity Federation
- 
+
 ### Changed
 - Users may notice larger diffs for Security List's `ingress_security_rules`, `egress_security_rules` and Route Table's `route_rules`. The internal representation has been changed from Lists to Sets, which results in unexpected but innocuous Terraform behavior. See this issue for discussion: https://github.com/hashicorp/terraform/issues/15180
 - Default timeout changed from 5 minutes to 15 minutes to accommodate some resources that may take longer to succeed
 - Ability to update compartment of an Object Storage Bucket
 - Updated Database data source to support tags
- 
+
 ### Fixed
 - Delete behavior fixed on Load Balancer resources for failed work requests
 
@@ -112,7 +422,7 @@ _This build contains a known issue where updates to a Route Table's Route Rules 
 ## 2.1.8 - 2018-05-10
 
 ### Added
-- Added support for remote VCN peering. More details can be found [here](https://github.com/oracle/terraform-provider-oci/blob/master/docs/core/remote_peering_connections.md), and an example [here](https://github.com/oracle/terraform-provider-oci/blob/master/docs/examples/networking/remote_vcn_peering_full).
+- Added support for remote VCN peering. More details can be found [here](https://github.com/oracle/terraform-provider-oci/blob/master/docs/core/remote_peering_connections.md), and an example [here](https://github.com/oracle/terraform-provider-oci/blob/master/examples/networking/remote_vcn_peering_full).
 - Added a data source for boot volumes. More details can be found [here](https://github.com/oracle/terraform-provider-oci/blob/master/docs/core/boot_volumes.md).
 
 ### Fixed
@@ -122,7 +432,7 @@ _This build contains a known issue where updates to a Route Table's Route Rules 
 ## 2.1.7 - 2018-05-03
 
 ### Added
-- Added support for virtual host names for Load balancer listeners. See [listeners](https://github.com/oracle/terraform-provider-oci/blob/master/docs/load_balancer/listeners.md), [hostnames](https://github.com/oracle/terraform-provider-oci/blob/master/docs/load_balancer/hostnames.md) for more details. 
+- Added support for virtual host names for Load balancer listeners. See [listeners](https://github.com/oracle/terraform-provider-oci/blob/master/docs/load_balancer/listeners.md), [hostnames](https://github.com/oracle/terraform-provider-oci/blob/master/docs/load_balancer/hostnames.md) for more details.
 
 ## 2.1.6 - 2018-04-26
 
@@ -141,10 +451,10 @@ _This build contains a known issue where updates to a Route Table's Route Rules 
      - Volume backups can specify whether a full or incremental backup type should be created
  - Filters support all Terraform primitives (string, bool, int, float)
  - Imports for Load Balancer resource are now enabled
- 
+
 ### Fixed
 - Fixed policy version_date bug (#508)
-     
+
 ## 2.1.5 - 2018-04-12
 
 ### Added
@@ -155,7 +465,7 @@ _This build contains a known issue where updates to a Route Table's Route Rules 
 - Added support for Local VCN Peering. More details can be found [here](https://github.com/oracle/terraform-provider-oci/blob/master/docs/core/local_peering_gateways.md).
 - DNS service integration: adds Zone and Record resources, datasources, documentation and basic examples. More details can be found [here](https://github.com/oracle/terraform-provider-oci/tree/master/docs/dns).
 
-### Deprecated 
+### Deprecated
 - Instances: The “image” attribute is now deprecated. Please use the “source_details” with “source_type” set to “image” instead.
 
 ## 2.1.4 - 2018-04-09
@@ -211,7 +521,7 @@ More details for the changes introduced in 2.1.0 can be found [here](https://git
 
 ### Notes
 - With this release we started using the new official [OCI Go SDK](https://github.com/oracle/oci-go-sdk). Widespread changes to the source code were needed to make this happen.
-- Removing optional parameters from a created resource will not result in a difference and the value for that field will remain as it was. If you want to reset the field to the default value returned by the service for that field you will have to taint the resource to destroy it and recreate it. 
+- Removing optional parameters from a created resource will not result in a difference and the value for that field will remain as it was. If you want to reset the field to the default value returned by the service for that field you will have to taint the resource to destroy it and recreate it.
 - If upgrading the OCI provider from v1.x.x, see [this wiki](https://github.com/oracle/terraform-provider-oci/wiki/Oracle-Terraform-Provider-Name-Change) for migration steps.
 - See docs for this version [here](https://github.com/oracle/terraform-provider-oci/tree/v2.1.0).
 
